@@ -23,8 +23,8 @@ smtp.ehlo()  # say Hello
 smtp.starttls()  # TLS 사용시 필요
 smtp.login('kdsnop@gmail.com', 'kds0121004!')
 
-msg = MIMEText('본문 테스트 메시지')
-msg['Subject'] = '테스트'
+msg = MIMEText('Let me send an Email using SMTP Service')
+msg['Subject'] = 'Testing...'
 msg['To'] = 'kdsnop@gmail.com'
 smtp.sendmail('kdsnop@gmail.com', 'kdsnop@naver.com', msg.as_string())
 
