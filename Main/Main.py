@@ -1,31 +1,54 @@
 import smtplib
 from email.mime.text import MIMEText
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
 import time
 
 
-# def sendMail(subject, body):
-#     msg = MIMEText(body)
-#     msg['Subject'] = subject
-#     msg['From'] = "kdsnop@gmail.com"
-#     msg['To'] = "kdsnop@naver.com"
-#
-#     s = smtplib.SMTP('smtp.gmail.com', 587)
-#     s.send_message(msg)
-#     s.quit()
-#
-#
-# bsObj = BeautifulSoup(urlopen(""))
+def Menu():
+    print("Do you want to send E-Mail??")
+    select_menu = input("1. Yes  2. No ")
+    select_list = []
 
-smtp = smtplib.SMTP('smtp.live.com', 587)
-smtp.ehlo()  # say Hello
-smtp.starttls()  # TLS 사용시 필요
-smtp.login('kdsnop@gmail.com', 'kds0121004!')
+    while True:
+        print("Hold on Please...")
+        time.sleep(2)
+        if select_menu is '1':
+            Email = sendMail()
+            select_list.append(Email)
+            break
 
-msg = MIMEText('Let me send an Email using SMTP Service')
-msg['Subject'] = 'Testing...'
-msg['To'] = 'kdsnop@gmail.com'
-smtp.sendmail('kdsnop@gmail.com', 'kdsnop@naver.com', msg.as_string())
+        elif select_menu is '2':
+            print("Thank you for Using this Application")
+            exit(0)
+            break
 
-smtp.quit()
+        else:
+            print("There is no Manual Related to : {}".format(select_menu))
+
+
+def sendMail():
+    ID, PWD = input("Enter your email address and password. : \n").split()
+    time.sleep(1)
+
+    Receiver = input("Enter the email address of the person receiving the email. : \n")
+    time.sleep(1)
+
+    print("When writing an email, use _ instead of spaces. \nFor the Example, How_Are_You_Doing?")
+    Subject, Body = input("Please enter the subject and content of the email. : \n").split()
+    time.sleep(1)
+
+    smtp = smtplib.SMTP('smtp.live.com', 587)
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login(ID, PWD)
+
+    msg = MIMEText(Body)
+    msg['Subject'] = Subject
+    msg['From'] = ID
+    msg['To'] = Receiver
+    smtp.sendmail(ID, Receiver, msg.as_string())
+    print("Success for Sent Email")
+    smtp.quit()
+
+
+Menu()
+
